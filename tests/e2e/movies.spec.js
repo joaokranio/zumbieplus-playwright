@@ -6,12 +6,10 @@ const { request } = require('node:http')
 
 test.beforeAll(async () => {
     await executeSQL('DELETE from movies')
-
 })
 
 test('deve poder cadastrar um novo filme', async ({ page }) => {
     const movie = data.create
-    // await executeSQL(`DELETE from movies WHERE title = '${movie.title}';`)
 
     await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin')
     await page.movies.create(movie)
@@ -27,12 +25,10 @@ test('deve poder remover um filme', async ({ page, request }) => {
     await page.movies.remove(movie.title)
     const message = 'Filme removido com sucesso.'
     await page.popup.haveText(message)
-
 })
 
 test('não pode cadastrar quando o titulo é duplicado', async ({ page, request }) => {
     const movie = data.duplicate
-
     await request.api.postMovie(movie)
 
     await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin')
@@ -61,7 +57,6 @@ test('deve realizar busca pelo termo zumbi', async ({ page, request }) => {
     movies.data.forEach(async (m) =>{
         await request.api.postMovie(m)
     })
-
     await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin')
     await page.movies.search(movies.input)
     await page.movies.tableHave(movies.outputs)

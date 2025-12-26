@@ -7,9 +7,7 @@ const DbConfig = {
     password: 'postgres',
     port: 5432
 };
-
 const pool = new Pool(DbConfig);
-
 export async function executeSQL(sqlScript) {
     try {
         const result = await pool.query(sqlScript);

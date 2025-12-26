@@ -9,7 +9,6 @@ const { Popup } = require('./actions/Components')
 
 const {Api} = require('./api')
 
-
 const test = base.extend({
     page: async ({ page }, use) => {
         const context = page
@@ -18,18 +17,13 @@ const test = base.extend({
         context ['login'] = new Login(page)
         context ['movies'] = new Movies(page)
         context ['popup'] = new Popup(page)
-
         await use(context)
     },
     request: async({request}, use) => {
         const context = request 
-
         context ['api'] = new Api(request)
-
         await context['api'].setToken()
-
         await use(context)
     }
 })
-
 export { test, expect }
